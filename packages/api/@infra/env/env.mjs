@@ -14,11 +14,6 @@ export default class Env{
 	 */
 	static load(){
 		switch(process.env.NODE_ENV){
-
-		case 'production':
-			dotenv.config({ path: path.join(process.cwd(), `./.env`) });
-			break;
-
 		case 'development':
 		case '':
 		case undefined:

@@ -24,6 +24,7 @@ export async function getServerApp(){
 	app.use(cors());
 	app.use(express.json());
 
+	app.set('port', (process.env.PORT || 1234));
 
 	// *Setting up the api routes:
 	app.use(`/api/v1/pois`, (await import('./poi/routes')).default);
@@ -43,7 +44,7 @@ export async function start(){
 	const app = await getServerApp();
 
 	// *Starting up the server:
-	server = await startServer(app, process.env.PORT);
+	server = await startServer(app, process.env.PORT || 1234);
 
 	return server;
 }
