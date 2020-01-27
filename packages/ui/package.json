@@ -1,0 +1,41 @@
+{
+	"name": "@xy-inc/ui",
+	"version": "1.0.0",
+	"description": "The frontend of the system",
+	"scripts": {
+		"serve": "parcel index.html --out-dir ./@build/output/serve/bundle --target browser --cache-dir ./@build/output/serve/cache --port 1234 --no-autoinstall",
+		"watch": "parcel watch index.html --out-dir ./@build/output/watch/bundle --target browser --cache-dir ./@build/output/watch/cache --no-autoinstall",
+		"build": "parcel build index.html --out-dir ./@build/output/build/bundle --target browser --no-source-maps --no-cache --no-minify",
+		"start": "yarn run watch",
+		"start-prod": "yarn run build"
+	},
+	"engines": {
+		"node": "11.14.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"@babel/runtime": "7.2.0",
+		"axios": "0.19.0",
+		"v-state": "1.1.2",
+		"vue": "2.6.10",
+		"vue-clickaway": "2.2.2",
+		"vue-router": "3.0.7",
+		"vuex": "3.1.1"
+	},
+	"devDependencies": {
+		"@babel/core": "7.2.2",
+		"@babel/plugin-proposal-nullish-coalescing-operator": "7.4.4",
+		"@babel/plugin-proposal-object-rest-spread": "7.2.0",
+		"@babel/plugin-proposal-optional-chaining": "7.2.0",
+		"@babel/plugin-syntax-import-meta": "7.2.0",
+		"@babel/plugin-transform-regenerator": "7.0.0",
+		"@babel/plugin-transform-runtime": "7.2.0",
+		"@babel/preset-env": "7.5.2",
+		"@vue/component-compiler-utils": "2.3.1",
+		"del": "3.0.0",
+		"gulp": "4.0.0",
+		"parcel-bundler": "1.12.3",
+		"vue-hot-reload-api": "2.3.3",
+		"vue-template-compiler": "2.6.10"
+	}
+}

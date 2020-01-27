@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="clear-output-watch" type="js.build_tools.gulp" folderName="UI">
+    <node-interpreter>project</node-interpreter>
+    <node-options />
+    <gulpfile>$PROJECT_DIR$/packages/ui/@build/gulpfile.js</gulpfile>
+    <tasks>
+      <task>clear-output:watch</task>
+    </tasks>
+    <arguments />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

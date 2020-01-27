@@ -1,0 +1,30 @@
+{
+	"name": "@xy-inc/api",
+	"version": "1.0.0",
+	"description": "The main server of the system",
+	"scripts": {
+		"test": "mocha -r esm --colors ./api.test.js",
+		"start": "nodemon --experimental-modules ./main.mjs",
+		"start-prod": "node --experimental-modules ./main.mjs"
+	},
+	"engines": {
+		"node": "11.14.0"
+	},
+	"dependencies": {
+		"cors": "2.8.5",
+		"dotenv": "8.0.0",
+		"express": "4.17.1",
+		"express-async-errors": "3.1.1",
+		"mongoose": "5.3.15",
+		"nodemon": "1.19.1",
+		"winston": "3.2.1"
+	},
+	"devDependencies": {
+		"chai": "4.2.0",
+		"chai-as-promised": "7.1.1",
+		"chai-http": "4.3.0",
+		"esm": "3.2.22",
+		"mocha": "7.0.0",
+		"request": "^2.88.0"
+	}
+}

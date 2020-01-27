@@ -1,0 +1,32 @@
+{
+	"name": "@xy-inc/main",
+	"version": "1.0.0",
+	"description": "A geolocation system",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"install-bootstrap": "yarn install && npx lerna bootstrap",
+		"bootstrap": "npx lerna bootstrap",
+		"test": "npx lerna run --stream --concurrency 1 test",
+		"start": "npx lerna run --parallel start",
+		"start-prod": "npx lerna run --parallel start-prod"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Potentii/xy-inc.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Potentii/xy-inc/issues"
+	},
+	"homepage": "https://github.com/Potentii/xy-inc",
+	"engines": {
+		"node": "11.14.0"
+	},
+	"type": "module",
+	"license": "MIT",
+	"devDependencies": {
+		"lerna": "3.18.3"
+	}
+}

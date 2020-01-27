@@ -1,0 +1,44 @@
+language: node_js
+
+
+node_js:
+  - "11.14.0"
+
+
+dist: xenial
+
+
+services:
+   - mongodb
+
+
+cache: yarn
+
+
+notifications:
+  email: false
+
+
+env:
+   - NODE_ENV=test
+   - DATABASE_HOST=localhost
+   - DATABASE_PORT=27017
+   - DATABASE_NAME=xy-inc
+   - DATABASE_USER=test-user
+   - DATABASE_PASS=test-pass
+   - DATABASE_SRV=false
+   - PORT=1234
+   - UI_PATH_CWD=../pwa/@build/output/watch/bundle
+
+
+before_script:
+   - sleep 10
+   - mongo admin --eval 'db.createUser({user:"test-user",pwd:"test-pass",roles:["readWrite"]});'
+
+
+script: yarn run test
+
+
+branches:
+  only:
+    - master

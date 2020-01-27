@@ -1,0 +1,9 @@
+{
+	"name": "@xy-inc/common",
+	"version": "1.0.0",
+	"description": "Common logic shared between the other modules",
+	"engines": {
+		"node": "11.14.0"
+	},
+	"type": "module"
+}

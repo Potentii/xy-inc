@@ -1,0 +1,13 @@
+.--anim--fade{
+   animation-name: --anim--fade;
+   animation-delay: 0.2s;
+   animation-duration: 0.3s;
+   animation-timing-function: ease;
+   animation-fill-mode: both;
+}
+
+@keyframes --anim--fade {
+   from {
+      opacity: 0;
+   }
+}
