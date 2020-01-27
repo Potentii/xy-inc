@@ -4,7 +4,7 @@ import RequestEnvelope  from '@xy-inc/common/envelope/request-envelope';
 import POI              from './poi';
 import ValidationError  from '../@infra/error/validation-error';
 import CodeError        from '../@infra/error/code-error';
-import logger           from '../@infra/log/log';
+import logger           from '../@infra/logger/log';
 
 
 

@@ -2,7 +2,7 @@ import express from 'express'
 import cors    from 'cors'
 import DB      from './@infra/db/db'
 import Env     from './@infra/env/env';
-import logger  from './@infra/log/log';
+import logger  from './@infra/logger/log';
 
 
 
