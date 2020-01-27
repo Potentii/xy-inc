@@ -6,8 +6,7 @@
 		"serve": "parcel index.html --out-dir ./@build/output/serve/bundle --target browser --cache-dir ./@build/output/serve/cache --port 1234 --no-autoinstall",
 		"watch": "parcel watch index.html --out-dir ./@build/output/watch/bundle --target browser --cache-dir ./@build/output/watch/cache --no-autoinstall",
 		"build": "parcel build index.html --out-dir ./@build/output/build/bundle --target browser --no-source-maps --no-cache --no-minify",
-		"start": "yarn run watch",
-		"start-prod": "yarn run build"
+		"start": "yarn run watch"
 	},
 	"engines": {
 		"node": "11.14.0"

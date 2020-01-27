@@ -11,8 +11,9 @@
 		"postinstall": "yarn run bootstrap",
 		"bootstrap": "npx lerna bootstrap",
 		"test": "yarn run bootstrap && npx lerna run --stream --concurrency 1 test",
+		"build": "npx lerna run --parallel build",
 		"start": "npx lerna run --parallel start",
-		"start-prod": "npx lerna run --parallel start-prod"
+		"heroku-start": "npx lerna run --scope @xy-inc/api start-prod"
 	},
 	"repository": {
 		"type": "git",
