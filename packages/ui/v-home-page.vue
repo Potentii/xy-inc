@@ -58,7 +58,7 @@
 				<div class="-draggable" ref="map" @click="map_onClick">
 
 					<!-- * The map image * -->
-					<img class="-map-img" src="./@resources/images/map.png">
+					<img class="-map-img" src="./@resources/images/map.svg">
 
 
 					<!-- * The map grid * -->
@@ -478,12 +478,17 @@ export default {
 	width: 100%;
 	height: 100%;
 	overflow: auto;
-	background-color: var(--m-grey-800);
+	background-color: var(--m-grey-50);
 }
 .v-home-page > .-map > .-viewport > .-draggable{
 	position: absolute;
 	width: min-content;
 	height: min-content;
+}
+.v-home-page > .-map > .-viewport > .-draggable > .-map-img{
+	opacity: 0.6;
+	width: 1700px;
+	filter: hue-rotate(230deg);
 }
 
 
@@ -497,7 +502,7 @@ export default {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(100,50,180,0.03);
+	background-color: rgba(100,50,180,0.05);
 	z-index: 9;
 }
 
@@ -530,14 +535,19 @@ export default {
 	width: 100%;
 	height: 100%;
 	background-color: var(--m-grey-100);
+	border: 2px solid var(--m-grey-400);
 
 	border-radius: 50%;
-	box-shadow: 0 6px 20px -2px rgba(0,0,0,0.3);
+	box-shadow:
+		0 6px 20px -1px rgba(0,0,0,0.4),
+		0 0 50px 20px rgba(255,255,255,0.7);
 	transition: background-color, box-shadow, transform,  0.2s ease-in-out;
 }
 .v-home-page > .-map:not(.--dragging) > .-footer > .-pin:hover > .-plane{
 	background-color: var(--m-blue-500);
-	box-shadow: 0 8px 25px -1px rgba(0,0,0,0.4);
+	box-shadow:
+		0 8px 25px -1px rgba(0,0,0,0.4),
+		0 0 50px 20px rgba(255,255,255,0.7);
 	transform: translateY(40%) scale(0.9, 0.4);
 }
 
