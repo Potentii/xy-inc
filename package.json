@@ -8,10 +8,11 @@
 	],
 	"scripts": {
 		"install-bootstrap": "yarn install && npx lerna bootstrap",
+		"postinstall": "yarn run bootstrap",
 		"bootstrap": "npx lerna bootstrap",
 		"test": "yarn run bootstrap && npx lerna run --stream --concurrency 1 test",
 		"start": "npx lerna run --parallel start",
-		"start-prod": "yarn run bootstrap && npx lerna run --parallel start-prod"
+		"start-prod": "npx lerna run --parallel start-prod"
 	},
 	"repository": {
 		"type": "git",
