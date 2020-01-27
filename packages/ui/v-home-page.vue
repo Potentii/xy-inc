@@ -58,7 +58,7 @@
 				<div class="-draggable" ref="map" @click="map_onClick">
 
 					<!-- * The map image * -->
-					<img class="-map-img" src="./@resources/images/map.svg">
+					<img class="-map-img" width="1700" height="1260" src="./@resources/images/map.svg">
 
 
 					<!-- * The map grid * -->
@@ -170,8 +170,12 @@ export default {
 
 	mounted(){
 		setTimeout(() => {
-			this.map_height = this.$refs.map.offsetHeight;
-		}, 300);
+			this.$nextTick(() => {
+				this.map_height = this.$refs.map.offsetHeight;
+			});
+		}, 500);
+		// *Updating the height:
+		setInterval(() => this.map_height = this.$refs.map.offsetHeight, 4000);
 	},
 
 
@@ -488,6 +492,7 @@ export default {
 .v-home-page > .-map > .-viewport > .-draggable > .-map-img{
 	opacity: 0.6;
 	width: 1700px;
+	height: 1260px;
 	filter: hue-rotate(230deg);
 }
 

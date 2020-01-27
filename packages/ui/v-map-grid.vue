@@ -35,11 +35,13 @@ export default {
 
 	mounted(){
 		setTimeout(() => {
-			const width = this.$el.offsetWidth;
-			const height = this.$el.offsetHeight;
-			this.v_grids = Math.floor(width / this.grid_size);
-			this.h_grids = Math.floor(height / this.grid_size);
-		}, 300);
+			this.$nextTick(() => {
+				const width = this.$el.offsetWidth;
+				const height = this.$el.offsetHeight;
+				this.v_grids = Math.floor(width / this.grid_size);
+				this.h_grids = Math.floor(height / this.grid_size);
+			});
+		}, 500);
 	},
 }
 </script>
