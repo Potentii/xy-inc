@@ -16,12 +16,12 @@
 						</div>
 
 
-						<button class="-action -cancel" type="button" @click="dismissForm_onClick">
+						<button class="-action -cancel" type="button" @click="dismissForm_onClick" title="Dismiss">
 							<i class="-icon material-icons">close</i>
 						</button>
 
 
-						<button class="-action -ok" type="submit">
+						<button class="-action -ok" type="submit" title="Create new POI">
 							<i class="-icon material-icons">done</i>
 						</button>
 
@@ -99,7 +99,7 @@
 			<footer class="-footer">
 
 				<!-- * The marker button * -->
-				<div class="-pin">
+				<div class="-pin" title="Drag and drop the marker on map">
 					<div class="-plane"></div>
 					<div
 						class="-marker-container"

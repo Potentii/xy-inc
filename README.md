@@ -6,6 +6,34 @@
 <br>
 
 
+[![Build Status](https://travis-ci.org/Potentii/xy-inc.svg?branch=master)](https://travis-ci.org/Potentii/xy-inc)
+
+
+<br>
+
+
+You can visit the app on [xy-inc-potentii.herokuapp.com](https://xy-inc-potentii.herokuapp.com/) (_The API is under [/api/v1](https://xy-inc-potentii.herokuapp.com/api/v1)_)
+
+![XY Inc](./docs/demo.gif?raw=true "XY Inc demo")
+
+
+<br>
+
+
+## Table of contents
+
+- [The project](#the-project)
+- [Running](#running)
+  - [Environments](#environments)
+- [Endpoints](#endpoints)
+- [Testing](#testing)
+  - [Making requests](#making-requests)
+- [License](#license)
+
+
+<br>
+
+
 ## The project
 
 
@@ -15,12 +43,12 @@ The project is structured as a monorepo, with the following packages:
 
 - **ui:** The frontend application, that consumes the API.
 
-- **db:** Database access, and migrations.
-
 - **common:** Logic and utils shared between the other packages.
 
+- **db:** Not actually a package, but contains the database compose configuration for development.
 
-The tech stack composes of [Node.js](https://nodejs.org/) on the backend, [MongoDB](https://www.mongodb.com/) as the database, and [Vue.js](https://vuejs.org/) to build the frontend.
+
+The tech stack is composed of [Node.js](https://nodejs.org/) on the backend, [MongoDB](https://www.mongodb.com/) as the database, and [Vue.js](https://vuejs.org/) to build the frontend.
 
 
 <br>
@@ -30,7 +58,7 @@ The tech stack composes of [Node.js](https://nodejs.org/) on the backend, [Mongo
 
 In order to execute the application, please note that you must have [Node.js](https://nodejs.org/) installed, preferably version [v11.14.0](https://nodejs.org/dist/v11.14.0/), and [yarn](https://yarnpkg.com/) as well.
 
-To **install the dependencies**, and prepare the packages please run:
+To **install the dependencies** and **prepare the packages**, please run:
 
 ```bash
 $ yarn install
@@ -59,7 +87,7 @@ This last command will start a server on [http://localhost:1234](http://localhos
 
 ### Environments
 
-The environment (_set by the `NODE_ENV` variable_) is very important to determine which database, port, etc... should be used by the application at runtime, the possible values are the following:
+The environment (_set by the `NODE_ENV` variable_) is very important to determine which database, bundle directory, etc... should be used by the application at runtime, the possible values are the following:
 
 - **development:** The default env when running the application, uses the `/packages/api/.env.development` env file (_you can change this file to point to another database for example_).
 
@@ -71,13 +99,13 @@ The environment (_set by the `NODE_ENV` variable_) is very important to determin
 
 ## Endpoints
 
-The API exposes two main REST endpoints:
+The API exposes **two** main REST endpoints:
 
 
 <br>
 
 
-**`POST /api/v1/pois`**
+**1. `POST /api/v1/pois`**
 
 Creates a new POI (Point Of Interest) on the map.
 
@@ -105,7 +133,7 @@ Creates a new POI (Point Of Interest) on the map.
 <br>
 
 
-**`GET /api/v1/pois`**
+**2. `GET /api/v1/pois`**
 
 Searches for all POIs placed on the map.
 
@@ -152,7 +180,7 @@ To perform a request using a body (a POST for example), the actual data should b
 
 **For example:**
 
-A request to `POST http://localhost:3000/api/v1/pois` should have a body like this:
+A request to `POST http://localhost:1234/api/v1/pois` should have a body like this:
 
 ```json
 {
