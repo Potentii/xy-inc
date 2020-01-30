@@ -18,8 +18,6 @@ public class PoiRepositoryImpl{
 
 	@Autowired
 	MongoTemplate mongoTemplate;
-	@Autowired
-	PoiRepository poiRepository;
 
 
 
@@ -42,7 +40,7 @@ public class PoiRepositoryImpl{
 		newPoi.set_id(null);
 
 		// *Inserting on database:
-		return poiRepository.insert(newPoi);
+		return mongoTemplate.insert(newPoi);
 	}
 
 
@@ -52,7 +50,7 @@ public class PoiRepositoryImpl{
 	 * @return All POIs found
 	 */
 	public List<Poi> getAll(){
-		return poiRepository.findAll();
+		return mongoTemplate.findAll(Poi.class);
 	}
 
 
