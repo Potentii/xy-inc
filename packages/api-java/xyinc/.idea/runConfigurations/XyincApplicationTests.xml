@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="XyincApplicationTests" type="JUnit" factoryName="JUnit">
+    <module name="xyinc" />
+    <option name="PACKAGE_NAME" value="com.potentii.xyinc" />
+    <option name="MAIN_CLASS_NAME" value="" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="package" />
+    <option name="PARAMETERS" value="" />
+    <envs>
+      <env name="DATABASE_USER" value="root-dev" />
+      <env name="DATABASE_MODE" value="mongodb" />
+      <env name="DATABASE_NAME" value="xy-inc" />
+      <env name="DATABASE_PASS" value="asd123!" />
+      <env name="UI_PATH_CWD" value="../../ui/@build/output/build/bundle/" />
+      <env name="DATABASE_AUTH_DB" value="admin" />
+      <env name="DATABASE_HOST" value="localhost:27017" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,19 +29,40 @@ public class PoiRepositoryImpl{
 	 * @throws ValidationException When a validation step didn't pass
 	 */
 	public Poi insert(Poi newPoi) throws ValidationException{
-		// *Validating the fields:
-		if(newPoi.getX() < 0)
-			throw new ValidationException("VALIDATION_ERROR", "Invalid POI", ValidationException.pathsBuilder().add("x", newPoi.getX(), "The position must be a positive integer").build());
-		if(newPoi.getY() < 0)
-			throw new ValidationException("VALIDATION_ERROR", "Invalid POI", ValidationException.pathsBuilder().add("y", newPoi.getY(), "The position must be a positive integer").build());
-		if(newPoi.getName() == null || newPoi.getName().trim().isEmpty())
-			throw new ValidationException("VALIDATION_ERROR", "Invalid POI", ValidationException.pathsBuilder().add("name", newPoi.getName(), "Name cannot be empty").build());
+		// *Validating the POI:
+		InsertValidator.tryValidate(newPoi);
 
 		// *Resetting the ID:
 		newPoi.set_id(null);
+		// *Trimming the POI name:
+		newPoi.setName(newPoi.getName().trim());
 
 		// *Inserting on database:
 		return mongoTemplate.insert(newPoi);
+	}
+
+
+
+	/**
+	 * Creates multiple POIs on the database
+	 * @param pois The POIs to be added
+	 * @return The POIs created, with their ID
+	 * @throws ValidationException When a validation step didn't pass
+	 */
+	public Collection<Poi> insertAll(Collection<Poi> pois) throws ValidationException{
+		// *Validating each POI:
+		for (var poi : pois)
+			InsertValidator.tryValidate(poi);
+
+		for (var poi : pois) {
+			// *Resetting the ID:
+			poi.set_id(null);
+			// *Trimming the POI name:
+			poi.setName(poi.getName().trim());
+		}
+
+		// *Inserting on database:
+		return mongoTemplate.insertAll(pois);
 	}
 
 
@@ -51,6 +73,17 @@ public class PoiRepositoryImpl{
 	 */
 	public List<Poi> getAll(){
 		return mongoTemplate.findAll(Poi.class);
+	}
+
+
+
+	/**
+	 * Retrieves the POI using the given ID
+	 * @param _id The POI ID
+	 * @return The found POI, or null if it couldn't be found
+	 */
+	public Poi getById(String _id){
+		return mongoTemplate.findById(_id, Poi.class);
 	}
 
 

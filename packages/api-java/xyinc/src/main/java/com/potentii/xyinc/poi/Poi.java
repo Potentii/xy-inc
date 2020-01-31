@@ -1,9 +1,6 @@
 package com.potentii.xyinc.poi;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "pois")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = { "_id", "name", "x", "y" })
 public class Poi {
 
 	@Id

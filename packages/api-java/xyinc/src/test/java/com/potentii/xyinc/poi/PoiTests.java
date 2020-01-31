@@ -2,26 +2,42 @@ package com.potentii.xyinc.poi;
 
 import com.potentii.xyinc.infra.exceptions.ValidationException;
 import com.potentii.xyinc.poi.repository.PoiRepositoryImpl;
-import com.potentii.xyinc.utils.FunctionWithException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
+@ActiveProfiles("test")
 public class PoiTests{
 
 	@Autowired
 	PoiRepositoryImpl poiRepository;
 
+
+
 	@Test
 	void canInsertValidPoi(){
 		try {
 			var poi = new Poi("new poi", 10, 4);
-			poiRepository.insert(poi);
-			// TODO assert poi
+			var createdPoi = poiRepository.insert(poi);
+
+			assertNotNull(createdPoi);
+			assertNotNull(createdPoi.get_id());
+			assertEquals(createdPoi.getName(), poi.getName());
+			assertEquals(createdPoi.getX(), poi.getX());
+			assertEquals(createdPoi.getY(), poi.getY());
+
+			var foundPoi = poiRepository.getById(createdPoi.get_id());
+
+			assertNotNull(foundPoi);
+			assertEquals(createdPoi, foundPoi);
 		} catch (ValidationException e) {
-			// TODO fail test
+			fail(e);
 		}
 	}
 
@@ -32,9 +48,12 @@ public class PoiTests{
 		var poi = new Poi("new poi", -10, -4);
 		try {
 			poiRepository.insert(poi);
-			// TODO fail test
+			fail("Added POI with invalid position");
 		} catch (ValidationException e) {
-			// TODO assert exception
+			assertTrue(e.getPaths().stream().anyMatch(p -> "x".equals(p.getPath()) && p.getValue().equals(poi.getX())));
+			assertTrue(e.getPaths().stream().anyMatch(p -> "y".equals(p.getPath()) && p.getValue().equals(poi.getY())));
+		} catch (Exception e) {
+			fail(e);
 		}
 	}
 
@@ -45,48 +64,46 @@ public class PoiTests{
 		var poi1 = new Poi(null, 14, 5);
 		try {
 			poiRepository.insert(poi1);
-			// TODO fail test
+			fail("Added POI with invalid name (null)");
 		} catch (ValidationException e) {
-			// TODO assert exception
+			assertTrue(e.getPaths().stream().anyMatch(p -> "name".equals(p.getPath()) && p.getValue() == null));
+		} catch (Exception e) {
+			fail(e);
 		}
 
 
 		var poi2 = new Poi("   ", 0, 12);
 		try {
 			poiRepository.insert(poi2);
-			// TODO fail test
+			fail("Added POI with invalid name (blank)");
 		} catch (ValidationException e) {
-			// TODO assert exception
+			assertTrue(e.getPaths().stream().anyMatch(p -> "name".equals(p.getPath()) && p.getValue().equals(poi2.getName())));
+		} catch (Exception e) {
+			fail(e);
 		}
 	}
 
 
 
 	@Test
-	void canSearchForAllPois(){
-		var pois = List.of(
-				new Poi("new poi", 10, 4),
-				new Poi("new poi", 10, 4),
-				new Poi("new poi", 10, 4),
-				new Poi("new poi", 10, 4),
-				new Poi("new poi", 10, 4)
-			)
-			.stream()
-			.map(FunctionWithException.withDefault(newPoi -> poiRepository.insert(newPoi), null));
+	void canSearchForAllPois() throws ValidationException {
+		var pois = poiRepository.insertAll(List.of(
+			new Poi("new poi", 255, 4),
+			new Poi("new poi", 99, 4),
+			new Poi("new poi", 0, 0),
+			new Poi("new poi", 8, 12),
+			new Poi("new poi", 10, 55)
+		));
 
 		var poisFound = poiRepository.getAll();
 
-		var condition = pois.allMatch(poiCreated -> {
-			return poisFound.stream().anyMatch(poiFound -> poiCreated.get_id().equals(poiFound.get_id()));
-		});
-
-		// TODO assert condition
+		assertTrue(poisFound.containsAll(pois));
 	}
 
 
 
 	@Test
-	void canSearchOnACircle(){
+	void canSearchOnACircle() throws ValidationException {
 		/*
 		 * *Considering a circle on (50,50) with radius of 10:
 		 *
@@ -120,57 +137,53 @@ public class PoiTests{
 		var radius = 10;
 		var radiusSqr = Math.pow(radius, 2);
 
-		var insidePois = List.of(
-				new Poi("In", 45, (int) Math.sqrt(Math.pow(45,2)-radiusSqr)),
-				new Poi("In", 55, (int) Math.sqrt(Math.pow(55,2)-radiusSqr)),
-				new Poi("In", 45, (int) Math.sqrt(Math.pow(45,2)-radiusSqr)),
-				new Poi("In", 55, (int) Math.sqrt(Math.pow(55,2)-radiusSqr)),
+		var insidePois = poiRepository.insertAll(List.of(
+			new Poi("In", 45, (int) Math.sqrt(Math.pow(45,2)-radiusSqr)),
+			new Poi("In", 55, (int) Math.sqrt(Math.pow(55,2)-radiusSqr)),
+			new Poi("In", 45, (int) Math.sqrt(Math.pow(45,2)-radiusSqr)),
+			new Poi("In", 55, (int) Math.sqrt(Math.pow(55,2)-radiusSqr)),
 
-				new Poi("In", 50, 50),
-				new Poi("In", 52, 55),
+			new Poi("In", 50, 50),
+			new Poi("In", 52, 55),
 
-				new Poi("In", 41, 50),
-				new Poi("In", 59, 50),
-				new Poi("In", 50, 59),
-				new Poi("In", 50, 41),
+			new Poi("In", 41, 50),
+			new Poi("In", 59, 50),
+			new Poi("In", 50, 59),
+			new Poi("In", 50, 41),
 
-				new Poi("In", 40, 50),
-				new Poi("In", 60, 50),
-				new Poi("In", 50, 60),
-				new Poi("In", 50, 40)
-			)
-			.stream()
-			.map(FunctionWithException.withDefault(newPoi -> poiRepository.insert(newPoi), null));
+			new Poi("In", 40, 50),
+			new Poi("In", 60, 50),
+			new Poi("In", 50, 60),
+			new Poi("In", 50, 40)
+		));
 
-		var outsidePois = List.of(
-				new Poi("Out", 60, 60),
-				new Poi("Out", 60, 40),
-				new Poi("Out", 40, 60),
-				new Poi("Out", 40, 40),
+		var outsidePois = poiRepository.insertAll(List.of(
+			new Poi("Out", 60, 60),
+			new Poi("Out", 60, 40),
+			new Poi("Out", 40, 60),
+			new Poi("Out", 40, 40),
 
-				new Poi("Out", 59, 59),
-				new Poi("Out", 59, 41),
-				new Poi("Out", 41, 59),
-				new Poi("Out", 41, 41),
+			new Poi("Out", 59, 59),
+			new Poi("Out", 59, 41),
+			new Poi("Out", 41, 59),
+			new Poi("Out", 41, 41),
 
-				new Poi("Out", 39, 50),
-				new Poi("Out", 61, 50),
-				new Poi("Out", 50, 61),
-				new Poi("Out", 50, 39)
-			)
-			.stream()
-			.map(FunctionWithException.withDefault(newPoi -> poiRepository.insert(newPoi), null));
+			new Poi("Out", 39, 50),
+			new Poi("Out", 61, 50),
+			new Poi("Out", 50, 61),
+			new Poi("Out", 50, 39)
+		));
 
 		// *Searching by proximity:
 		var foundInside = poiRepository.getByProximity(50, 50, radius);
 
 		var condition =
 			// *Checking that all IN POIs have been found:
-			insidePois.allMatch(in -> foundInside.stream().anyMatch(found -> found.get_id().equals(in.get_id())))
+			foundInside.containsAll(insidePois)
 			// *And that all OUT POIs haven't:
-			&& outsidePois.allMatch(out -> foundInside.stream().anyMatch(found -> found.get_id().equals(out.get_id())));
+			&& outsidePois.stream().noneMatch(foundInside::contains);
 
-		// TODO assert condition
+		assertTrue(condition);
 	}
 
 }

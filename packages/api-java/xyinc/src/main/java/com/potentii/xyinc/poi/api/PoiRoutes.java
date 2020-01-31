@@ -3,7 +3,8 @@ package com.potentii.xyinc.poi.api;
 import com.potentii.xyinc.infra.OptionsCheck;
 import com.potentii.xyinc.infra.api.envelope.RequestEnvelope;
 import com.potentii.xyinc.infra.api.envelope.ResponseEnvelope;
-import com.potentii.xyinc.infra.exceptions.ECodedException;
+import static com.potentii.xyinc.infra.exceptions.CodedException.ECodedException.INTERNAL_ERROR;
+import static com.potentii.xyinc.infra.exceptions.CodedException.ECodedException.INVALID_QUERY;
 import com.potentii.xyinc.infra.exceptions.ValidationException;
 import com.potentii.xyinc.poi.Poi;
 import com.potentii.xyinc.poi.repository.PoiRepositoryImpl;
@@ -43,7 +44,7 @@ public class PoiRoutes {
 					// *If it has some filters missing:
 					return ResponseEntity
 						.badRequest()
-						.body(ResponseEnvelope.error(ECodedException.INVALID_QUERY.getException()));
+						.body(ResponseEnvelope.error(INVALID_QUERY.getException()));
 				}
 			} else {
 				// *If it hasn't any filters:
@@ -82,7 +83,7 @@ public class PoiRoutes {
 		} catch(Exception e){
 			return ResponseEntity
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.body(ResponseEnvelope.error(ECodedException.INTERNAL_ERROR.getException()));
+				.body(ResponseEnvelope.error(INTERNAL_ERROR.getException()));
 		}
 	}
 
